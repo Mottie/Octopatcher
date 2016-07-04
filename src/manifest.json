@@ -1,0 +1,30 @@
+{
+  "name": "Octopatcher",
+  "version": "1.0.0",
+  "description": "Arrgh Some Patchy Goodness to GitHub",
+  "author": "Rob Garrison",
+  "manifest_version": 2,
+  "homepage_url": "http://github.com/Mottie/Octopatcher",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "options_page": "options.html",
+  "content_scripts": [{
+    "js": [
+      "github-collapse-in-comment.js",
+      "github-collapse-markdown.js"
+    ],
+    "matches": [
+      "https://github.com/*",
+      "https://gist.github.com/*"
+    ],
+    "run_at": "document_idle"
+  }],
+  "icons": {
+    "16": "images/icon16.png",
+    "19": "images/icon19.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
+}

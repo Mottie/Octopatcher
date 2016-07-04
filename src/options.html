@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Octopatcher</title>
+	<style>
+	html { box-sizing:border-box; }
+	*, *:before, *:after { box-sizing:inherit; }
+	::selection { background-color:#a00; color:#fff; }
+	a, input, select, button { outline-color:#a00; }
+	a, a:visited { text-decoration:none; color:#a00; }
+	a:hover { text-decoration:underline; }
+	body { width:500px; margin:0 auto; }
+	body * { font-size:18px; }
+	h1 { border-bottom:#000 1px solid; margin:10px 0; }
+	h1 a { font-size:24px; margin-left:4px; }
+	h1 img { position:relative; top:-6px; vertical-align:middle; }
+	h3 { margin:0; }
+	h3 a { font-size:22px; }
+	section { margin:10px 0; }
+	label { position:relative; display:block; line-height:1.4em; font-size:20px; margin-bottom:4px; }
+	label.color { display:inline-block; cursor:pointer; width:79px; }
+	label.color:after {
+		content:attr(data-header); display:block; position:absolute;
+		top:6px; left:10px; font-size:0.8em; font-weight:bold; color:#fff; cursor:pointer;
+		/* black outline; text shadow looks nicer than:
+		-webkit-text-stroke-width: 1px; -webkit-text-stroke-color: black; */
+		text-shadow:-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+	}
+	input[type="number"] { width:50px; }
+	input[type="checkbox"] { cursor:pointer; zoom:1.2; margin-top:6px; }
+	input[type="color"] { width:100%; height:40px; cursor:pointer; }
+	input:not([type="color"]), select, #reset { float:right; }
+	#footer { border-top:#000 1px solid; padding-top:5px; }
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>
+			<img src="images/icon48.png">
+			<a href="http://github.com/Mottie/Octopatcher">Octopatcher</a> (for GitHub)
+		</h1>
+	</header>
+	<section>
+		<h3><a href="https://github.com/Mottie/Octopatcher/docs/content-collapse.md">Content Collapse</a></h3>
+		<label>
+			Enabled
+			<input id="cc_enabled" title="is enabled" type="checkbox" checked>
+		</label>
+		<label>Initial State
+			<select id="cc_state">
+				<option value="c">Collapsed</option>
+				<option value="e">Expanded</option>
+			</select>
+		</label>
+		<label>Min Lines
+			<span title="Minimum number of lines required before&#10;the content block is made collapsible">
+				<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 14">
+					<path d="M6 10h2v2H6V10z m4-3.5c0 2.14-2 2.5-2 2.5H6c0-0.55 0.45-1 1-1h0.5c0.28 0 0.5-0.22 0.5-0.5v-1c0-0.28-0.22-0.5-0.5-0.5h-1c-0.28 0-0.5 0.22-0.5 0.5v0.5H4c0-1.5 1.5-3 3-3s3 1 3 2.5zM7 2.3c3.14 0 5.7 2.56 5.7 5.7S10.14 13.7 7 13.7 1.3 11.14 1.3 8s2.56-5.7 5.7-5.7m0-1.3C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7S10.86 1 7 1z" />
+				</svg>
+			</span>
+			<input id="cc_min" type="number" value="10" min="0">
+		</label>
+	</section>
+	<section>
+		<h3><a href="https://github.com/Mottie/Octopatcher/docs/markdown-collapse.md">Markdown Collapse</a></h3>
+		<label>
+			Enabled
+			<input id="mc_enabled" title="is enabled" type="checkbox" checked>
+		</label>
+		<label>Initial State
+			<select id="mc_state">
+				<option value="c">Collapsed</option>
+				<option value="e">Expanded</option>
+			</select>
+		</label>
+		<label>Arrow colors (H1 to H6)</label>
+		<label class="color" data-header="H1"><input id="mc_color0" type="color" value="#6778d0"></label>
+		<label class="color" data-header="H2"><input id="mc_color1" type="color" value="#ac9c3d"></label>
+		<label class="color" data-header="H3"><input id="mc_color2" type="color" value="#b94a73"></label>
+		<label class="color" data-header="H4"><input id="mc_color3" type="color" value="#56ae6c"></label>
+		<label class="color" data-header="H5"><input id="mc_color4" type="color" value="#9750a1"></label>
+		<label class="color" data-header="H6"><input id="mc_color5" type="color" value="#ba543d"></label>
+	</section>
+	<section id="footer">
+		<button id="reset" type="button">Reset</button>
+	</section>
+	<script src="options.js"></script>
+</body>
+</html>

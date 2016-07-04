@@ -1,0 +1,24 @@
+{
+  "name": "octopatcher",
+  "version": "1.0.0",
+  "description": "Arrgh Some Patchy Goodness to GitHub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mottie/Octopatcher"
+  },
+  "author": "Rob Garrison",
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/Mottie/Octopatcher/issues"
+  },
+  "homepage": "https://github.com/Mottie/Octopatcher",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-crx": "^1.0.3",
+    "grunt-eslint": "^19.0.0"
+  }
+}
+
