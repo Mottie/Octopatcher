@@ -11,7 +11,7 @@ module.exports = function(grunt) {
     pkg: pkg,
 
     clean: {
-      src: ["octopatcher.crx"]
+      src: ["octopatcher.zip"]
     },
     jshint: {
       options: {
@@ -26,22 +26,27 @@ module.exports = function(grunt) {
     eslint: {
       target: ["src/*.js"]
     },
-    crx: {
-      chrome: {
+    compress: {
+      main: {
         options: {
-          privateKey: "chrome.pem",
+          archive: "octopatcher.zip",
         },
-        src: ["src/*", "src/**/*"],
-        dest: "octopatcher.crx",
+        files: [{
+          expand : true,
+          cwd: "src/",
+          src: ["**"],
+          dest: "",
+          filter: "isFile"
+        }]
       }
     }
   });
 
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-crx");
+  grunt.loadNpmTasks("grunt-contrib-compress");
   grunt.loadNpmTasks("grunt-eslint");
 
-  grunt.registerTask("default", ["clean", "jshint", "eslint", "crx"]);
+  grunt.registerTask("default", ["clean", "jshint", "eslint", "compress"]);
 
 };
