@@ -1,4 +1,9 @@
-#  <img src="https://cloud.githubusercontent.com/assets/136959/16567977/46d822dc-41ea-11e6-9fd7-704016b37099.png" width="60px" align="center"> Octopatcher [![tag](https://img.shields.io/github/tag/Mottie/Octopatcher.svg)](https://github.com/Mottie/Octopatcher/tags)
+#  <img src="https://cloud.githubusercontent.com/assets/136959/16567977/46d822dc-41ea-11e6-9fd7-704016b37099.png" width="60px" align="center"> Octopatcher [![tags][tag-img]][tag-url] [![devDependency Status][david-dev-img]][david-dev-url]
+
+[tag-url]: https://github.com/Mottie/Octopatcher/tags
+[tag-img]: https://img.shields.io/github/tag/Mottie/Octopatcher.svg
+[david-dev-url]: https://david-dm.org/Mottie/Octopatcher#info=devDependencies
+[david-dev-img]: https://david-dm.org/Mottie/Octopatcher/dev-status.svg
 
 Arrgh Some Patchy Goodness to GitHub!
 
