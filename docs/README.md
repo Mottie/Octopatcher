@@ -16,3 +16,18 @@ Click on the link below to read about the specific functionality of each script.
 * [Markdown Collapse](collapse-markdown.md)
 
 The "Reset" button at the bottom of the page will restore all default settings.
+
+# Change Log
+
+### Version 1.0.2 (7/5/2016)
+
+* Add support for Firefox.
+
+### Version 1.0.1 (7/4/2016)
+
+* Docs: ye old reset button.
+* Grunt: create zip; crx not needed.
+
+### Version 1.0.0 (7/4/2016)
+
+* Initial commit.

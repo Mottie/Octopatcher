@@ -19,9 +19,3 @@ Adds a header that can toggle long code and quote blocks in issue comments
 ## Screenshot
 
 ![github-collapse-in-comment](https://cloud.githubusercontent.com/assets/136959/16365968/71ebeeac-3bd4-11e6-970f-b7616347e440.gif)
-
-## Change Log
-
-#### Version 1.0.0 (7/4/2016)
-
-* Initial commit.

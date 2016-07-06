@@ -20,9 +20,3 @@ Adds an arrow that can be used to collapse markdown headers
 ## Screenshot
 
 ![github-collapse-markdown](https://cloud.githubusercontent.com/assets/136959/16364748/34f5d776-3bb4-11e6-84c7-a00f2817f80a.gif)
-
-## Change Log
-
-#### Version 1.0.0 (7/4/2016)
-
-* Initial commit.
