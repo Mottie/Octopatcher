@@ -206,7 +206,7 @@
   }
 
   function update(vals) {
-    settings = vals;
+    settings = Object.assign({}, defaults, settings, vals);
     removeClass($$("." + collapsed + ", .ghcm-hidden"), collapsed + " ghcm-hidden");
     if (settings.mc_enabled) {
       addArrows();
@@ -254,12 +254,15 @@
 
   init();
 
-  chrome.storage.sync.get(defaults, vals => {
+  // Firefox does not support chrome.storage.sync :(
+  // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage#Chrome_incompatibilities
+  // The storage API is not supported in content scripts.
+  let storageType = chrome.storage && chrome.storage.sync ? "sync" : "local";
+  chrome.storage[storageType].get(defaults, vals => {
     update(vals);
   });
-
   chrome.storage.onChanged.addListener(() => {
-    chrome.storage.sync.get(defaults, vals => {
+    chrome.storage[storageType].get(defaults, vals => {
       update(vals);
     });
   });

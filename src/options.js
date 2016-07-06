@@ -1,6 +1,6 @@
 /* jshint esnext:true, unused:true */
 /* global chrome */
-let defaults = {
+const defaults = {
   cc_enabled : true,
   cc_minLines : 10,
   cc_state : "c",
@@ -30,7 +30,7 @@ function setColors(colors) {
 }
 
 function setOptions() {
-  chrome.storage.sync.set({
+  chrome.storage[chrome.storage.sync ? "sync" : "local"].set({
     cc_enabled : $("cc_enabled").checked,
     cc_minLines : $("cc_min").value,
     cc_state : $("cc_state").value,
@@ -43,7 +43,7 @@ function setOptions() {
 
 function getOptions() {
   // Use default values
-  chrome.storage.sync.get(defaults, settings => {
+  chrome.storage[chrome.storage.sync ? "sync" : "local"].get(defaults, settings => {
     $("cc_enabled").checked = settings.cc_enabled;
     $("cc_min").value = settings.cc_minLines;
     $("cc_state").value = settings.cc_state;
@@ -54,7 +54,7 @@ function getOptions() {
 }
 
 function resetOptions() {
-  chrome.storage.sync.set(defaults);
+  chrome.storage[chrome.storage.sync ? "sync" : "local"].set(defaults);
   getOptions();
 }
 

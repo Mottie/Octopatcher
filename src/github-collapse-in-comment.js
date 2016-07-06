@@ -157,8 +157,9 @@
     });
   }
 
-  function update() {
+  function update(vals) {
     busy = true;
+    settings = Object.assign({}, defaults, settings, vals);
     let toggles = $$(".gcic-block"),
       indx = toggles.length;
     while (indx--) {
@@ -173,7 +174,7 @@
   }
 
   function init(vals) {
-    settings = vals;
+    settings = Object.assign({}, defaults, settings, vals);
     let styles = document.createElement("style");
     styles.textContent = `
       .gcic-block {
@@ -212,8 +213,6 @@
 
     addBindings();
     addToggles();
-
-    // updatePopup();
   }
 
   function $(selector, el) {
@@ -250,13 +249,15 @@
     }
   }
 
-  chrome.storage.sync.get(defaults, vals => {
+  // Firefox does not support chrome.storage.sync
+  // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage#Chrome_incompatibilities
+  // The storage API is not supported in content scripts.
+  let storageType = chrome.storage && chrome.storage.sync ? "sync" : "local";
+  chrome.storage[storageType].get(defaults, vals => {
     init(vals);
   });
-
   chrome.storage.onChanged.addListener(() => {
-    chrome.storage.sync.get(defaults, vals => {
-      settings = vals;
+    chrome.storage[storageType].get(defaults, vals => {
       update(vals);
     });
   });

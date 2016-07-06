@@ -11,7 +11,7 @@ module.exports = function(grunt) {
     pkg: pkg,
 
     clean: {
-      src: ["octopatcher.zip"]
+      src: ["octopatcher.zip", "octopatcher.xpi"]
     },
     jshint: {
       options: {
@@ -20,25 +20,51 @@ module.exports = function(grunt) {
         esnext: true
       },
       files: {
-        src: ["src/**/*.js"]
+        src: ["src/*.js"]
       }
     },
     eslint: {
       target: ["src/*.js"]
     },
     compress: {
-      main: {
+      chrome: {
         options: {
           archive: "octopatcher.zip",
         },
         files: [{
           expand : true,
           cwd: "src/",
-          src: ["**"],
+          src: ["*", "images/*"],
+          dest: "",
+          filter: "isFile"
+        }, {
+          expand : true,
+          cwd: "src/chrome",
+          src: ["*"],
+          dest: "",
+          filter: "isFile"
+        }]
+      },
+      firefox: {
+        options: {
+          archive: "octopatcher.xpi",
+          mode: "zip"
+        },
+        files: [{
+          expand : true,
+          cwd: "src/",
+          src: ["*", "images/*"],
+          dest: "",
+          filter: "isFile"
+        }, {
+          expand : true,
+          cwd: "src/firefox",
+          src: ["*"],
           dest: "",
           filter: "isFile"
         }]
       }
+
     }
   });
 
@@ -47,6 +73,28 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-compress");
   grunt.loadNpmTasks("grunt-eslint");
 
-  grunt.registerTask("default", ["clean", "jshint", "eslint", "compress"]);
+  // update chrome & firefox manifest.json file version numbers to match the package.json version
+  grunt.registerTask("updateManifest", () => {
+    let indx, file,
+      manifests = ["src/chrome/manifest.json", "src/firefox/manifest.json"],
+      len = manifests.length;
+    for ( indx = 0; indx < len; indx++ ) {
+      if (!grunt.file.exists(manifests[indx])) {
+        grunt.log.error("file " + manifests[indx] + " not found");
+        return true; // return false to abort the execution
+      }
+      file = grunt.file.readJSON(manifests[indx]);
+      file.version = pkg.version;
+      grunt.file.write(manifests[indx], JSON.stringify(file, null, 2)); // serialize it back to file
+    }
+  });
 
+  grunt.registerTask("default", [
+    "clean",
+    "jshint",
+    "eslint",
+    "updateManifest",
+    "compress:chrome",
+    "compress:firefox"
+  ]);
 };

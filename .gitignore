@@ -162,9 +162,9 @@ pip-log.txt
 .DS_Store
 
 ############
-## Chrome extension
+## Chrome/Firefox extension
 ############
 # private key
 *.pem
-*.crx
+*.xpi
 *.zip
