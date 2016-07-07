@@ -16,7 +16,7 @@ Arrgh Some Patchy Goodness to GitHub!
 
 Install it for:
 * [Chrome](https://chrome.google.com/webstore/detail/octopatcher/lcilaoigfgceebdljpanjenhmnoijmal?hl=en-US&gl=US).
-* [Firefox](https://addons.mozilla.org/en-US/firefox/addon/octopatcher/) (awaiting approval).
+* [Firefox](https://addons.mozilla.org/en-US/firefox/addon/octopatcher/).
 
 ## To Do
 
