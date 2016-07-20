@@ -1,5 +1,5 @@
 // @name         GitHub Collapse Markdown
-// @version      1.0.0
+// @version      1.0.1
 // @description  A script that collapses markdown headers
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -169,7 +169,7 @@
         content:"\u25bc";
       }
       .${markdown} .${collapsed}:after {
-        content:"\u25C4";
+        transform: rotate(90deg);
       }
       /* clicking on header link won't pass svg as the event.target */
       .octicon-link {
