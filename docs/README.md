@@ -19,6 +19,10 @@ The "Reset" button at the bottom of the page will restore all default settings.
 
 # Change Log
 
+### Version 1.0.3 (7/20/2016)
+
+* Collapsed-Markdown: Fix squished collapsed arrow.
+
 ### Version 1.0.2 (7/5/2016)
 
 * Add support for Firefox.
