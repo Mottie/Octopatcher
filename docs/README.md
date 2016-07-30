@@ -19,6 +19,10 @@ The "Reset" button at the bottom of the page will restore all default settings.
 
 # Change Log
 
+### Version 1.0.5 (7/30/2016)
+
+* Add help pages to manifest.
+
 ### Version 1.0.4 (7/30/2016)
 
 * Collapsed-Comment:

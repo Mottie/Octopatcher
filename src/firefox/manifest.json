@@ -1,6 +1,6 @@
 {
   "name": "Octopatcher",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Arrgh Some Patchy Goodness to GitHub",
   "author": "Rob Garrison",
   "manifest_version": 2,
@@ -16,7 +16,8 @@
       ],
       "matches": [
         "https://github.com/*",
-        "https://gist.github.com/*"
+        "https://gist.github.com/*",
+        "https://help.github.com/*"
       ],
       "run_at": "document_idle"
     }
