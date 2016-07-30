@@ -1,5 +1,5 @@
 // @name         GitHub Collapse In Comment
-// @version      1.0.0
+// @version      1.0.1
 // @description  A script that adds a header that can toggle long code and quote blocks in comments
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -60,7 +60,7 @@
       if ($("#discussion_bucket")) {
         let loop,
           indx = 0,
-          block = document.createElement("div"),
+          block = document.createElement("a"),
           regexSyntax = /highlight-([\w-]+)/,
           els = $$(".markdown-body pre, .email-signature-reply"),
           len = els.length;
@@ -68,6 +68,7 @@
         // "flash" = blue box styling
         block.className = "gcic-block border flash" +
           (settings.cc_state === "c" ? " gcic-block-closed" : "");
+        block.href = "#";
 
         // loop with delay to allow user interaction
         loop = () => {
@@ -121,6 +122,7 @@
       let els, indx, flag,
         el = event.target;
       if (el && el.classList.contains("gcic-block")) {
+        event.preventDefault();
         // shift + click = toggle all blocks in a single comment
         // shift + ctrl + click = toggle all blocks on page
         if (event.shiftKey) {
@@ -185,6 +187,7 @@
         top:1px;
         cursor:pointer;
         font-weight:bold;
+        display:block;
       }
       .gcic-block + .highlight {
         border-top:none;
