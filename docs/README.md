@@ -19,6 +19,16 @@ The "Reset" button at the bottom of the page will restore all default settings.
 
 # Change Log
 
+### Version 1.0.4 (7/30/2016)
+
+* Collapsed-Comment:
+  * Improve accessibility of headers.
+  * Fix squished collaped arrow.
+* Collapsed-Markdown:
+  * Add support for [GitHub-FixedHeader](https://github.com/StylishThemes/GitHub-FixedHeader) style.
+  * Include GitHub help pages.
+  * Fix lint & a code tweak.
+
 ### Version 1.0.3 (7/20/2016)
 
 * Collapsed-Markdown: Fix squished collapsed arrow.
