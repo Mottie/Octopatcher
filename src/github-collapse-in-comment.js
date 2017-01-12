@@ -83,7 +83,7 @@
               numberOfLines = el.innerHTML.split("\n").length;
               if (numberOfLines > minLines) {
                 syntaxClass = "";
-                wrap = closest(el, ".highlight");
+                wrap = closest(".highlight", el);
                 if (wrap && wrap.classList.contains("highlight")) {
                   syntaxClass = (wrap.className || "").match(regexSyntax);
                 } else {
@@ -126,11 +126,11 @@
         // shift + click = toggle all blocks in a single comment
         // shift + ctrl + click = toggle all blocks on page
         if (event.shiftKey) {
-          els = $$(".gcic-block", event.ctrlKey ? "" : closest(el, ".markdown-body"));
+          els = $$(".gcic-block", event.ctrlKey ? "" : closest(".markdown-body", el));
           indx = els.length;
           flag = el.classList.contains("gcic-block-closed");
           while (indx--) {
-            els[indx].classList[flag ? "remove" : "add"]("gcic-block-closed");
+            els[indx].classList.toggle("gcic-block-closed", !flag);
           }
         } else {
           el.classList.toggle("gcic-block-closed");
@@ -223,11 +223,14 @@
   function $$(selector, el) {
     return Array.from((el || document).querySelectorAll(selector));
   }
-  function closest(el, selector) {
-    while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
+  function closest(selector, el) {
+    while (el && el.nodeType === 1) {
+      if (el.matches(selector)) {
+        return el;
+      }
       el = el.parentNode;
     }
-    return el && el.matches(selector) ? el : null;
+    return null;
   }
   function removeClass(selector, name) {
     $$(selector).forEach(el => {

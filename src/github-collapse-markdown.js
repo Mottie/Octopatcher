@@ -58,7 +58,7 @@
   }
 
   function nextHeader(el, level, isCollapsed) {
-    el.classList[isCollapsed ? "add" : "remove"](collapsed);
+    el.classList.toggle(collapsed, isCollapsed);
     let selector = headers.slice(0, level).join(","),
       els = [];
     el = el.nextElementSibling;
@@ -194,7 +194,7 @@
       let target = event.target,
         name = (target && target.nodeName || "").toLowerCase();
       if (name === "path") {
-        target = closest(target, "svg");
+        target = closest("svg", target);
       }
       if (!target || target.classList.contains("anchor") ||
         name === "a" || name === "img" ||
@@ -204,10 +204,10 @@
         return;
       }
       // check if element is inside a header
-      target = closest(event.target, headers.join(","));
+      target = closest(headers.join(","), event.target);
       if (target && headers.indexOf(target.nodeName || "") > -1) {
         // make sure the header is inside of markdown
-        if (closest(target, ".markdown-body, .markdown-format")) {
+        if (closest(".markdown-body, .markdown-format", target)) {
           toggle(target, event.shiftKey);
         }
       }
@@ -227,8 +227,7 @@
       }
     } else {
       // not enabled, remove styles
-      removeAll(".ghcm-colors");
-      removeAll(".ghcm-arrows");
+      removeAll(".ghcm-colors, .ghcm-arrows");
     }
   }
 
@@ -249,11 +248,14 @@
       el.classList.remove(...name);
     }
   }
-  function closest(el, selector) {
-    while (el && el.nodeName !== "BODY" && !el.matches(selector)) {
+  function closest(selector, el) {
+    while (el && el.nodeType === 1) {
+      if (el.matches(selector)) {
+        return el;
+      }
       el = el.parentNode;
     }
-    return el && el.matches(selector) ? el : null;
+    return null;
   }
   function removeAll(selector) {
     $$(selector).forEach(el => {
