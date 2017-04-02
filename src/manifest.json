@@ -28,5 +28,8 @@
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
-  "options_page": "options.html"
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  }
 }

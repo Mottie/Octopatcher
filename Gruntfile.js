@@ -37,12 +37,6 @@ module.exports = function(grunt) {
           src: ["*", "images/*"],
           dest: "",
           filter: "isFile"
-        }, {
-          expand : true,
-          cwd: "src/chrome",
-          src: ["*"],
-          dest: "",
-          filter: "isFile"
         }]
       },
       firefox: {
@@ -54,12 +48,6 @@ module.exports = function(grunt) {
           expand : true,
           cwd: "src/",
           src: ["*", "images/*"],
-          dest: "",
-          filter: "isFile"
-        }, {
-          expand : true,
-          cwd: "src/firefox",
-          src: ["*"],
           dest: "",
           filter: "isFile"
         }]
@@ -75,18 +63,14 @@ module.exports = function(grunt) {
 
   // update chrome & firefox manifest.json file version numbers to match the package.json version
   grunt.registerTask("updateManifest", () => {
-    let indx, file,
-      manifests = ["src/chrome/manifest.json", "src/firefox/manifest.json"],
-      len = manifests.length;
-    for ( indx = 0; indx < len; indx++ ) {
-      if (!grunt.file.exists(manifests[indx])) {
-        grunt.log.error("file " + manifests[indx] + " not found");
-        return true; // return false to abort the execution
-      }
-      file = grunt.file.readJSON(manifests[indx]);
-      file.version = pkg.version;
-      grunt.file.write(manifests[indx], JSON.stringify(file, null, 2)); // serialize it back to file
+    let file;
+    if (!grunt.file.exists("src/manifest.json")) {
+      grunt.log.error("src/manifest.json file not found");
+      return true; // return false to abort the execution
     }
+    file = grunt.file.readJSON("src/manifest.json");
+    file.version = pkg.version;
+    grunt.file.write("src/manifest.json", JSON.stringify(file, null, 2)); // serialize it back to file
   });
 
   grunt.registerTask("default", [
