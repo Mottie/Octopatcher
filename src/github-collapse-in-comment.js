@@ -4,22 +4,24 @@
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
 // @author       Rob Garrison
-// @source       https://github.com/Mottie/GitHub-userscripts (extension converted from github-collapse-in-comment.user.js)
+// @source       https://github.com/Mottie/GitHub-userscripts
+//  (extension converted from github-collapse-in-comment.user.js)
 /* jshint esnext:true, unused:true */
 /* global chrome */
 (() => {
   "use strict";
   /*
-   Idea from: https://github.com/dear-github/dear-github/issues/166 & https://github.com/isaacs/github/issues/208
+   Idea from: https://github.com/dear-github/dear-github/issues/166 &
+   https://github.com/isaacs/github/issues/208
    examples:
     https://github.com/Mottie/tablesorter/issues/569
     https://github.com/jquery/jquery/issues/3195
   */
   let timer, settings,
-    busy = false,
+    busy = false;
 
-    // defaults ALSO set in options.js
-    defaults = {
+  // defaults ALSO set in options.js
+  const defaults = {
       cc_enabled : true,
       cc_animated: true,
       // hide code/quotes longer than this number of lines
@@ -40,8 +42,8 @@
     };
 
   function makeToggle(name, lines) {
-    /* full list of class names from
-    https://github.com/github/linguist/blob/master/lib/linguist/languages.yml (look at "tm_scope" value)
+    /* full list of class names from (look at "tm_scope" value)
+    https://github.com/github/linguist/blob/master/lib/linguist/languages.yml
     here are some example syntax highlighted class names:
       highlight-text-html-markdown-source-gfm-apib
       highlight-text-html-basic
@@ -73,7 +75,7 @@
 
         // loop with delay to allow user interaction
         loop = () => {
-          let el, wrap, node, syntaxClass, numberOfLines,
+          let el, wrap, node, syntax, numberOfLines,
             minLines = parseInt(settings.cc_minLines, 10),
             // max number of DOM insertions per loop
             max = 0;
@@ -83,16 +85,16 @@
             if (el && !el.classList.contains("gcic-has-toggle")) {
               numberOfLines = el.innerHTML.split("\n").length;
               if (numberOfLines > minLines) {
-                syntaxClass = "";
+                syntax = "";
                 wrap = closest(".highlight", el);
                 if (wrap && wrap.classList.contains("highlight")) {
-                  syntaxClass = (wrap.className || "").match(regexSyntax);
+                  syntax = (wrap.className || "").match(regexSyntax);
                 } else {
                   // no syntax highlighter defined (not wrapped)
                   wrap = el;
                 }
                 node = block.cloneNode();
-                node.innerHTML = makeToggle(syntaxClass, numberOfLines);
+                node.innerHTML = makeToggle(syntax, numberOfLines);
                 wrap.parentNode.insertBefore(node, wrap);
                 el.classList.add("gcic-has-toggle");
                 if (settings.cc_state === "c") {
@@ -138,7 +140,7 @@
 
   function addBindings() {
     document.addEventListener("click", event => {
-      let els, indx, flag,
+      let els, flag,
         el = event.target;
       if (el && el.classList.contains("gcic-block")) {
         event.preventDefault();
@@ -166,9 +168,10 @@
             }
           } else {
             el.classList.add("gcic-block-closed");
-            if (el.nextElementSibling.matches(".highlight, .email-signature-reply, pre")) {
-              let codeBlock = el.nextElementSibling;
-              onTransitionEnd(codeBlock, () => {
+            els = ".highlight, .email-signature-reply, pre";
+            if (el.nextElementSibling.matches(els)) {
+              els = el.nextElementSibling;
+              onTransitionEnd(els, () => {
                 el.classList.add("end");
               });
             }
@@ -184,7 +187,12 @@
           let mtarget = mutation.target;
           // preform checks before adding code wrap to minimize function calls
           // update after comments are edited
-          if (!busy && (mtarget === target || mtarget.matches(".js-comment-body, .js-preview-body"))) {
+          if (
+            !busy && (
+              mtarget === target ||
+              mtarget.matches(".js-comment-body, .js-preview-body")
+            )
+          ) {
             clearTimeout(timer);
             timer = setTimeout(() => {
               addToggles();
