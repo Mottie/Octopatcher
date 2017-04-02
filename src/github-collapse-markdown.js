@@ -57,6 +57,19 @@
     }
   }
 
+  function onAnimationEnd(els, fn) {
+    els.forEach(el => {
+      let listener = () => {
+        fn();
+        // remove listener after event fired
+        el.removeEventListener("animationend", listener);
+        el.removeEventListener("webkitAnimationEnd", listener);
+      };
+      el.addEventListener("animationend", listener);
+      el.addEventListener("webkitAnimationEnd", listener);
+    });
+  }
+
   function nextHeader(el, level, isCollapsed) {
     el.classList.toggle(collapsed, isCollapsed);
     let selector = headers.slice(0, level).join(","),
@@ -68,9 +81,16 @@
     }
     if (els.length) {
       if (isCollapsed) {
-        addClass(els, "ghcm-hidden");
+        addClass(els, "ghcm-hidden"); // fade out
+        onAnimationEnd(els, () => {
+          addClass(els, "end"); // add .end class for hiding content after animation end
+        });
       } else {
-        removeClass(els, collapsed + " ghcm-hidden");
+        removeClass(els, collapsed + " ghcm-hidden end");
+        addClass(els, "ghcm-visible"); // fade in
+        onAnimationEnd(els, () => {
+          removeClass(els, "ghcm-visible end");
+        });
       }
     }
   }
@@ -169,6 +189,8 @@
         top:calc(50% - .5em);
         font-size:.8em;
         content:"\u25bc";
+        transition:transform .3s ease;
+        -webkit-transition:transform .3s ease;
       }
       .markdown-body .${collapsed}:after, .markdown-format .${collapsed}:after {
         transform: rotate(90deg);
@@ -178,7 +200,61 @@
         pointer-events:none;
       }
       .ghcm-hidden {
-        display:none !important;
+        animation: fade-out .5s;
+        animation-fill-mode: forwards;
+        -webkit-animation: fade-out .5s;
+        -webkit-animation-fill-mode: forwards;
+        transform-origin: top;
+      }
+      .ghcm-hidden.end {
+        display: none !important;
+      }
+      .ghcm-visible {
+        animation: fade-in .5s;
+        animation-fill-mode: forwards;
+        -webkit-animation: fade-in .5s;
+        -webkit-animation-fill-mode: forwards;
+        transform-origin: top;
+      }
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: scaleY(0);
+        }
+        to {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
+      @-webkit-keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: scaleY(0);
+        }
+        to {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
+      @keyframes fade-out {
+        from {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+        to {
+          opacity: 0;
+          transform: scaleY(0);
+        }
+      }
+      @-webkit-keyframes fade-out {
+        from {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+        to {
+          opacity: 0;
+          transform: scaleY(0);
+        }
       }
     `;
     $("head").appendChild(styles);
