@@ -154,8 +154,8 @@
           }
           if (isClosing) {
             /*
-             * delay toggle after class removing
-             * if immediately toggle, transition won't shown
+             * delay removing after class removing
+             * if immediately remove, transition won't show
              */
             setTimeout(() => {
               el.classList.remove("gcic-block-closed");
