@@ -21,6 +21,7 @@
     // defaults ALSO set in options.js
     defaults = {
       cc_enabled : true,
+      cc_animated: true,
       // hide code/quotes longer than this number of lines
       cc_minLines : 15,
       cc_state : "c" // "c" = collapsed; "e" = expanded
@@ -118,17 +119,21 @@
   }
 
   function onTransitionEnd(els, fn) {
-    els = Array.isArray(els) ? els : [els];
-    els.forEach(el => {
-      let listener = () => {
-        fn();
-        // remove listener after event fired
-        el.removeEventListener("transitionend", listener);
-        el.removeEventListener("webkitTransitionEnd", listener);
-      };
-      el.addEventListener("transitionend", listener);
-      el.addEventListener("webkitTransitionEnd", listener);
-    });
+    if (settings.cc_animated) {
+      els = Array.isArray(els) ? els : [els];
+      els.forEach(el => {
+        let listener = () => {
+          fn();
+          // remove listener after event fired
+          el.removeEventListener("transitionend", listener);
+          el.removeEventListener("webkitTransitionEnd", listener);
+        };
+        el.addEventListener("transitionend", listener);
+        el.addEventListener("webkitTransitionEnd", listener);
+      });
+    } else {
+      fn();
+    }
   }
 
   function addBindings() {
@@ -140,26 +145,25 @@
         // shift + click = toggle all blocks in a single comment
         // shift + ctrl + click = toggle all blocks on page
         if (event.shiftKey) {
-          els = $$(".gcic-block", event.ctrlKey ? "" : closest(".markdown-body", el));
-          indx = els.length;
-          flag = el.classList.contains("gcic-block-closed");
-          while (indx--) {
-            els[indx].classList.toggle("gcic-block-closed", !flag);
-          }
+          flag = !el.classList.contains("gcic-block-closed");
+          els = closest(".markdown-body", el);
+          $$(".gcic-block", event.ctrlKey ? "" : els).forEach(el => {
+            el.classList.toggle("gcic-block-closed", flag);
+            el.classList.toggle("end", flag);
+          });
         } else {
-          let isClosing = false;
-          if (el.classList.contains("gcic-block-closed")) { // opening
-            el.classList.remove("end"); // remove .end when open
-            isClosing = true;
-          }
-          if (isClosing) {
-            /*
-             * delay removing after class removing
-             * if immediately remove, transition won't show
-             */
-            setTimeout(() => {
-              el.classList.remove("gcic-block-closed");
-            }, 50);
+          // opening
+          if (el.classList.contains("gcic-block-closed")) {
+            if (settings.cc_animated) {
+              el.classList.remove("end"); // remove .end when open
+              // delay removing after class removing
+              // if immediately removed, transition won't show
+              setTimeout(() => {
+                el.classList.remove("gcic-block-closed");
+              }, 50);
+            } else {
+              el.classList.remove(...["gcic-block-closed", "end"]);
+            }
           } else {
             el.classList.add("gcic-block-closed");
             if (el.nextElementSibling.matches(".highlight, .email-signature-reply, pre")) {
@@ -215,50 +219,53 @@
     let styles = document.createElement("style");
     styles.textContent = `
       .gcic-block {
-        border:#eee 1px solid;
+        border: #eee 1px solid;
         padding:2px 8px 2px 10px;
-        border-radius:5px 5px 0 0;
-        position:relative;
-        top:1px;
-        cursor:pointer;
-        font-weight:bold;
-        display:block;
+        border-radius: 5px 5px 0 0;
+        position: relative;
+        top: 1px;
+        cursor: pointer;
+        font-weight: bold;
+        display: block;
       }
       .gcic-block + .highlight {
-        border-top:none;
+        border-top: none;
       }
-      .gcic-block + .highlight, .gcic-block + .email-signature-reply,
+      .gcic-block + .highlight,
+      .gcic-block + .email-signature-reply,
       .gcic-block + pre {
-        opacity:1;
+        opacity: 1;
         transform: scaleY(1);
         transform-origin: top;
-        transition:opacity .5s ease, transform .5s ease;
-        -webkit-transition:opacity .5s ease, transform .5s ease;
+        transition: opacity .5s ease, transform .5s ease;
+        -webkit-transition: opacity .5s ease, transform .5s ease;
       }
       .gcic-block + .email-signature-reply {
-        margin-top:0;
+        margin-top: 0;
       }
       .gcic-block:after {
-        content:"\u25bc ";
-        float:right;
-        transition:transform .3s ease;
-        -webkit-transition:transform .3s ease;
+        content: "\u25bc ";
+        float: right;
+        transition: transform .3s ease;
+        -webkit-transition: transform .3s ease;
       }
       .gcic-block-closed {
-        border-radius:5px;
-        margin-bottom:10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
       }
       .gcic-block-closed:after {
         transform: rotate(90deg);
       }
-      .gcic-block-closed + .highlight, .gcic-block-closed + .email-signature-reply,
+      .gcic-block-closed + .highlight,
+      .gcic-block-closed + .email-signature-reply,
       .gcic-block-closed + pre {
-        opacity:0;
+        opacity: 0;
         transform: scaleY(0);
       }
-      .gcic-block-closed.end + .highlight, .gcic-block-closed.end + .email-signature-reply,
+      .gcic-block-closed.end + .highlight,
+      .gcic-block-closed.end + .email-signature-reply,
       .gcic-block-closed.end + pre {
-        display:none;
+        display: none;
       }
     `;
     $("head").appendChild(styles);
@@ -270,9 +277,11 @@
   function $(selector, el) {
     return (el || document).querySelector(selector);
   }
+
   function $$(selector, el) {
     return Array.from((el || document).querySelectorAll(selector));
   }
+
   function closest(selector, el) {
     while (el && el.nodeType === 1) {
       if (el.matches(selector)) {
@@ -282,16 +291,19 @@
     }
     return null;
   }
+
   function removeClass(selector, name) {
     $$(selector).forEach(el => {
       el.classList.remove(name || selector);
     });
   }
+
   function removeAll(selector) {
     $$(selector).forEach(el => {
       el.parentNode.removeChild(el);
     });
   }
+
   function removeSelection() {
     // remove text selection - http://stackoverflow.com/a/3171348/145346
     var sel = window.getSelection ? window.getSelection() : document.selection;
