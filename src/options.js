@@ -1,12 +1,24 @@
 /* jshint esnext:true, unused:true */
 /* global chrome */
 const defaults = {
-  cc_enabled : true,
-  cc_minLines : 10,
-  cc_state : "c",
-  mc_enabled: true,
-  mc_state: "e",
-  mc_colors: ["#6778d0", "#ac9c3d", "#b94a73", "#56ae6c", "#9750a1", "#ba543d"]
+  // content collapse
+  cc_enabled : true, // enabled
+  cc_animated: true, // show animation
+  cc_minLines : 10,  // min lines
+  cc_state : "c",    // (c)ollapsed or (e)xpanded
+
+  // markdown collapse
+  mc_enabled: true,  // enabled
+  mc_animated: true, // show animation
+  mc_state: "e",     // (c)ollapsed or (e)xpanded
+  mc_colors: [       // arrow colors
+    "#6778d0",       // h1
+    "#ac9c3d",       // h2
+    "#b94a73",       // h3
+    "#56ae6c",       // h4
+    "#9750a1",       // h5
+    "#ba543d"        // h6
+  ]
 };
 
 function getColors() {
@@ -32,9 +44,11 @@ function setColors(colors) {
 function setOptions() {
   chrome.storage[chrome.storage.sync ? "sync" : "local"].set({
     cc_enabled : $("cc_enabled").checked,
+    cc_animated : $("cc_animated").checked,
     cc_minLines : $("cc_min").value,
     cc_state : $("cc_state").value,
     mc_enabled: $("mc_enabled").checked,
+    mc_animated : $("mc_animated").checked,
     mc_state: $("mc_state").value,
     mc_colors: getColors()
   });
@@ -43,14 +57,17 @@ function setOptions() {
 
 function getOptions() {
   // Use default values
-  chrome.storage[chrome.storage.sync ? "sync" : "local"].get(defaults, settings => {
-    $("cc_enabled").checked = settings.cc_enabled;
-    $("cc_min").value = settings.cc_minLines;
-    $("cc_state").value = settings.cc_state;
-    $("mc_enabled").checked = settings.mc_enabled;
-    $("mc_state").value = settings.mc_state;
-    setColors(settings.mc_colors);
-  });
+  chrome.storage[chrome.storage.sync ? "sync" : "local"]
+    .get(defaults, settings => {
+      $("cc_enabled").checked = settings.cc_enabled;
+      $("cc_animated").checked = settings.cc_animated;
+      $("cc_min").value = settings.cc_minLines;
+      $("cc_state").value = settings.cc_state;
+      $("mc_enabled").checked = settings.mc_enabled;
+      $("mc_animated").checked = settings.mc_animated;
+      $("mc_state").value = settings.mc_state;
+      setColors(settings.mc_colors);
+    });
 }
 
 function resetOptions() {

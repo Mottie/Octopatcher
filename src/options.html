@@ -10,43 +10,40 @@
 	a, input, select, button { outline-color:#a00; }
 	a, a:visited { text-decoration:none; color:#a00; }
 	a:hover { text-decoration:underline; }
-	body { width:500px; margin:0 auto; }
-	body * { font-size:18px; }
-	h1 { border-bottom:#000 1px solid; margin:10px 0; }
-	h1 a { font-size:24px; margin-left:4px; }
-	h1 img { position:relative; top:-6px; vertical-align:middle; }
+	body { margin:10px; width:500px; }
+	body * { font-size:15px; }
 	h3 { margin:0; }
-	h3 a { font-size:22px; }
+	h3 a { font-size:18px; }
 	section { margin:10px 0; }
-	label { position:relative; display:block; line-height:1.4em; font-size:20px; margin-bottom:4px; }
+	label { position:relative; display:block; line-height:2em; font-size:16px; margin-bottom:4px; }
 	label.color { display:inline-block; cursor:pointer; width:79px; }
 	label.color:after {
 		content:attr(data-header); display:block; position:absolute;
-		top:6px; left:10px; font-size:0.8em; font-weight:bold; color:#fff; cursor:pointer;
+		top:0; left:10px; font-size:0.8em; font-weight:bold; color:#fff; cursor:pointer;
 		/* black outline; text shadow looks nicer than:
 		-webkit-text-stroke-width: 1px; -webkit-text-stroke-color: black; */
 		text-shadow:-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 	}
 	input[type="number"] { width:50px; }
-	input[type="checkbox"] { cursor:pointer; zoom:1.2; margin-top:6px; }
+	input[type="checkbox"] { cursor:pointer; zoom:1.1; margin-top:6px; }
 	input[type="color"] { width:100%; height:40px; cursor:pointer; padding:2px; }
-	input:not([type="color"]), select, #reset { float:right; }
+	input:not([type="color"]), select, #reset { float:right; line-height:1.5em; }
+	article { text-align:center; }
 	#footer { border-top:#000 1px solid; padding-top:5px; }
+	#reset { margin-bottom:5px; }
 	</style>
 </head>
 
 <body>
-	<header>
-		<h1>
-			<img src="images/icon48.png">
-			<a href="https://github.com/Mottie/Octopatcher/tree/master/docs">Octopatcher</a> (for GitHub)
-		</h1>
-	</header>
 	<section>
 		<h3><a href="https://github.com/Mottie/Octopatcher/blob/master/docs/collapse-comment.md">Content Collapse</a></h3>
 		<label>
 			Enabled
 			<input id="cc_enabled" title="is enabled" type="checkbox" checked>
+		</label>
+		<label>
+			Animated
+			<input id="cc_animated" title="is animated" type="checkbox" checked>
 		</label>
 		<label>Initial State
 			<select id="cc_state">
@@ -69,6 +66,10 @@
 			Enabled
 			<input id="mc_enabled" title="is enabled" type="checkbox" checked>
 		</label>
+		<label>
+			Animated
+			<input id="mc_animated" title="is animated" type="checkbox" checked>
+		</label>
 		<label>Initial State
 			<select id="mc_state">
 				<option value="c">Collapsed</option>
@@ -76,12 +77,14 @@
 			</select>
 		</label>
 		<label>Arrow colors (H1 to H6)</label>
-		<label class="color" data-header="H1"><input id="mc_color0" type="color" value="#6778d0"></label>
-		<label class="color" data-header="H2"><input id="mc_color1" type="color" value="#ac9c3d"></label>
-		<label class="color" data-header="H3"><input id="mc_color2" type="color" value="#b94a73"></label>
-		<label class="color" data-header="H4"><input id="mc_color3" type="color" value="#56ae6c"></label>
-		<label class="color" data-header="H5"><input id="mc_color4" type="color" value="#9750a1"></label>
-		<label class="color" data-header="H6"><input id="mc_color5" type="color" value="#ba543d"></label>
+		<article>
+			<label class="color" data-header="H1"><input id="mc_color0" type="color" value="#6778d0"></label>
+			<label class="color" data-header="H2"><input id="mc_color1" type="color" value="#ac9c3d"></label>
+			<label class="color" data-header="H3"><input id="mc_color2" type="color" value="#b94a73"></label>
+			<label class="color" data-header="H4"><input id="mc_color3" type="color" value="#56ae6c"></label>
+			<label class="color" data-header="H5"><input id="mc_color4" type="color" value="#9750a1"></label>
+			<label class="color" data-header="H6"><input id="mc_color5" type="color" value="#ba543d"></label>
+		</article>
 	</section>
 	<section id="footer">
 		<button id="reset" type="button">Reset</button>
