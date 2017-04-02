@@ -67,7 +67,7 @@
 
         // "flash" = blue box styling
         block.className = "gcic-block border flash" +
-          (settings.cc_state === "c" ? " gcic-block-closed" : "");
+          (settings.cc_state === "c" ? " gcic-block-closed end" : "");
         block.href = "#";
 
         // loop with delay to allow user interaction
@@ -117,6 +117,20 @@
     busy = false;
   }
 
+  function onTransitionEnd(els, fn) {
+    els = Array.isArray(els) ? els : [els];
+    els.forEach(el => {
+      let listener = () => {
+        fn();
+        // remove listener after event fired
+        el.removeEventListener("transitionend", listener);
+        el.removeEventListener("webkitTransitionEnd", listener);
+      };
+      el.addEventListener("transitionend", listener);
+      el.addEventListener("webkitTransitionEnd", listener);
+    });
+  }
+
   function addBindings() {
     document.addEventListener("click", event => {
       let els, indx, flag,
@@ -133,7 +147,28 @@
             els[indx].classList.toggle("gcic-block-closed", !flag);
           }
         } else {
-          el.classList.toggle("gcic-block-closed");
+          let isClosing = false;
+          if (el.classList.contains("gcic-block-closed")) { // opening
+            el.classList.remove("end"); // remove .end when open
+            isClosing = true;
+          }
+          if (isClosing) {
+            /*
+             * delay removing after class removing
+             * if immediately remove, transition won't show
+             */
+            setTimeout(() => {
+              el.classList.remove("gcic-block-closed");
+            }, 50);
+          } else {
+            el.classList.add("gcic-block-closed");
+            if (el.nextElementSibling.matches(".highlight, .email-signature-reply, pre")) {
+              let codeBlock = el.nextElementSibling;
+              onTransitionEnd(codeBlock, () => {
+                el.classList.add("end");
+              });
+            }
+          }
         }
         removeSelection();
       }
@@ -192,12 +227,22 @@
       .gcic-block + .highlight {
         border-top:none;
       }
+      .gcic-block + .highlight, .gcic-block + .email-signature-reply,
+      .gcic-block + pre {
+        opacity:1;
+        transform: scaleY(1);
+        transform-origin: top;
+        transition:opacity .5s ease, transform .5s ease;
+        -webkit-transition:opacity .5s ease, transform .5s ease;
+      }
       .gcic-block + .email-signature-reply {
         margin-top:0;
       }
       .gcic-block:after {
         content:"\u25bc ";
         float:right;
+        transition:transform .3s ease;
+        -webkit-transition:transform .3s ease;
       }
       .gcic-block-closed {
         border-radius:5px;
@@ -208,6 +253,11 @@
       }
       .gcic-block-closed + .highlight, .gcic-block-closed + .email-signature-reply,
       .gcic-block-closed + pre {
+        opacity:0;
+        transform: scaleY(0);
+      }
+      .gcic-block-closed.end + .highlight, .gcic-block-closed.end + .email-signature-reply,
+      .gcic-block-closed.end + pre {
         display:none;
       }
     `;
