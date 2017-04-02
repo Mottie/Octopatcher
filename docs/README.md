@@ -19,6 +19,29 @@ The "Reset" button at the bottom of the page will restore all default settings.
 
 # Change Log
 
+### Version 1.1.0 (4/2/2017)
+
+* Readme: Add link to Opera extension.
+* Global:
+  * Use improved closest function.
+  * Switch to using a single manifest file for all browsers.
+  * Change to using "options_ui" instead of deprecated "options_page".
+  * Update option page &amp; styling.
+  * Update docs.
+  * Misc code cleanup.
+* Docs:
+  * Update settings.
+  * Update screenshots.
+* Collapsed-Comment:
+  * Add comment animation; See [pull #1](https://github.com/Mottie/Octopatcher/pull/1); thanks [@gluons](https://github.com/gluons)!
+  * Add animated option to allow toggling.
+  * Use pjax & preview event listeners.
+* Collapsed-Markdown:
+  * Add markdown animation; See [pull #1](https://github.com/Mottie/Octopatcher/pull/1); thanks [@gluons](https://github.com/gluons)!
+  * Add animated option to allow toggling.
+* Meta:
+  * Update dependencies.
+
 ### Version 1.0.5 (7/30/2016)
 
 * Add help pages to manifest.

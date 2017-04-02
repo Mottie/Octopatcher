@@ -11,12 +11,13 @@ Adds an arrow that can be used to collapse markdown headers
 
 ## Settings
 
-![markdown-collapse](https://cloud.githubusercontent.com/assets/136959/16566473/660ccb40-41da-11e6-864e-2e3bb7708b12.png)
+![markdown-collapse](images/markdown-collapse.png)
 
 * "Enabled" - Check to enable the markdown collapse script.
+* "Animated" - Check to enable animation of content; added in v1.1.0.
 * "Initial State" - Set to "Collapsed" (default) to have all header content initially collapsed, or "Expanded" to leave the markdown as-is.
 * "Arrow Colors" - Click on any of the color swatches to change the arrow color associated with each header (H1 through H6). The default palette was generated from [iwanthue](http://tools.medialab.sciences-po.fr/iwanthue/) using colorblind friendly, soft colors.
 
 ## Screenshot
 
-![github-collapse-markdown](https://cloud.githubusercontent.com/assets/136959/16364748/34f5d776-3bb4-11e6-84c7-a00f2817f80a.gif)
+![github-collapse-markdown](images/github-collapse-markdown.gif)

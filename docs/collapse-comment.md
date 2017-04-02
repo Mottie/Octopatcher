@@ -10,12 +10,13 @@ Adds a header that can toggle long code and quote blocks in issue comments
 
 ## Settings
 
-![content-collapse](https://cloud.githubusercontent.com/assets/136959/16566472/66091342-41da-11e6-854d-d4023c80071a.png)
+![content-collapse](images/content-collapse.png)
 
 * "Enabled" - Check to enable (default) the content collapse script.
+* "Animated" - Check to enable (default) animation of content; added in v1.1.0.
 * "Initial State" - Set to "Collapsed" (default) to have the blocks initially collapsed, or "Expanded" to keep the blocks expanded.
 * "Min Lines" - Set the minimum number of lines (`10` by default) that needs to be within a block before a header is added.
 
 ## Screenshot
 
-![github-collapse-in-comment](https://cloud.githubusercontent.com/assets/136959/16365968/71ebeeac-3bd4-11e6-970f-b7616347e440.gif)
+![github-collapse-in-comment](images/github-collapse-in-comment.gif)
