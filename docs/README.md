@@ -4,7 +4,7 @@
 
 Ye can open th' settings page by clickin' th' Chrome extension icon and choosing "options".
 
-![octopatcher-options](https://cloud.githubusercontent.com/assets/136959/16571015/d67ac822-4217-11e6-888c-d6827562cd72.png)
+![octopatcher-options](images/octopatcher-options.png)
 
 The code for this extension is split into different functions - modified from the original userscripts - so, the documentation is also split into those respective sections to ease future expansion of the code and documentation.
 
