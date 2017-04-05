@@ -35,7 +35,6 @@ The "Reset" button at the bottom of the page will restore all default settings.
 * Collapsed-Comment:
   * Add comment animation; See [pull #1](https://github.com/Mottie/Octopatcher/pull/1); thanks [@gluons](https://github.com/gluons)!
   * Add animated option to allow toggling.
-  * Use pjax & preview event listeners.
 * Collapsed-Markdown:
   * Add markdown animation; See [pull #1](https://github.com/Mottie/Octopatcher/pull/1); thanks [@gluons](https://github.com/gluons)!
   * Add animated option to allow toggling.
