@@ -1,5 +1,5 @@
 // @name         GitHub Collapse Markdown
-// @version      1.1.0
+// @version      1.1.1
 // @description  A script that collapses markdown headers
 // @license      https://creativecommons.org/licenses/by-sa/4.0/
 // @namespace    https://github.com/Mottie
@@ -212,6 +212,10 @@
       /* clicking on header link won't pass svg as the event.target */
       .octicon-link, .octicon-link > * {
         pointer-events: none;
+      }
+      /* Allow pointer events on help pages - fixes #4 */
+      #com .markdown-format .octicon-link {
+        pointer-events: all;
       }
       .ghcm-hidden {
         animation: fade-out .5s;
